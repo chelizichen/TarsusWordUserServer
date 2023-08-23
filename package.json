@@ -1,0 +1,27 @@
+{
+  "name": "TarsusWordUserServer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev  --project tsconfig.json src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cron": "^2.4.1",
+    "lodash": "^4.17.21",
+    "redis": "^4.6.7",
+    "tarsus": "1.4.92",
+    "tarsus-cli": "^1.2.98",
+    "typescript": "5.0.2"
+  },
+  "devDependencies": {
+    "@types/mysql": "^2.15.21",
+    "@types/node": "^20.5.1",
+    "@types/redis": "^4.0.11",
+    "@types/lodash": "^4.14.197"
+  }
+}
