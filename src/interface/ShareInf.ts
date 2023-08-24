@@ -17,7 +17,7 @@ interface ShareInf {
 
 }
 
-@TarsusReflect("share")
+@TarsusReflect("WordNodeServer","share")
 class ShareImpl implements ShareInf {
     getShareList(Request: getListBaseReq, Response: getShareListRes): Promise<getShareListRes> {
         throw new Error("Method not implemented.");

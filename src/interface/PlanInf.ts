@@ -29,8 +29,7 @@ interface PlanInf {
 
     savePlanWords(Request: PlanWords, Response: baseRes): Promise<baseRes>
 }
-
-@TarsusReflect("plan")
+@TarsusReflect("WordNodeServer","plan")
 class PlanImpl implements PlanInf {
     getLatestPlanByUser(Request: queryIdReq, Response: getPlanDetailByIdRes): Promise<getPlanDetailByIdRes> {
         throw new Error("Method not implemented.");
