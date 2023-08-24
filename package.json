@@ -16,7 +16,8 @@
     "redis": "^4.6.7",
     "tarsus": "1.4.92",
     "tarsus-cli": "^1.2.98",
-    "typescript": "5.0.2"
+    "typescript": "5.0.2",
+    "uid": "^2.0.2"
   },
   "devDependencies": {
     "@types/mysql": "^2.15.21",

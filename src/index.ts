@@ -3,13 +3,13 @@ import WordImpl from './interface/Word';
 import RecordImpl from "./interface/Record";
 import UserImpl from "./interface/UserInf";
 import PlanImpl from "./interface/PlanInf";
-import "./components/cache";
+import "./components/schedule";
 
 
 @TarsusMsApplication
 class MicroService {
     static main() {
-        LoadInterface([WordImpl, RecordImpl, UserImpl, PlanImpl]);
+        LoadInterface([ UserImpl]);
         LoadTaro()
         LoadStruct()
         LoadServer();

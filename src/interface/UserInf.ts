@@ -25,14 +25,15 @@ interface UserInf {
     batchSetUser(Request: batchSetUserReq, Response: baseRes): Promise<baseRes>
 }
 
-@TarsusInterFace("record")
+@TarsusInterFace("user")
 class UserImpl implements UserInf {
+
     @TarsusMethod
     @Stream("queryIdReq", "getUserByIdRes")
     async getUserById(Request: queryIdReq, Response: getUserByIdRes): Promise<getUserByIdRes> {
         const id = Request.id
         let sql = `
-        select * from user where id = ?
+        select * from users where id = ?
         `
         let params = [id]
         const data = await $ExcuteQuery<User>(sql,params)

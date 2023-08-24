@@ -3,7 +3,6 @@ import {$PoolConn} from "tarsus/core/database";
 import {Schedule,Cron} from 'tarsus/core/schedule'
 import * as lodash from 'lodash';
 import moment from "moment";
-import {CronJob, CronJobParameters} from "cron";
 
 type user_id = string
 
