@@ -7,6 +7,7 @@ import {
 } from "../struct/Plan";
 import {TarsusReflect} from 'tarsus/core/microservice'
 import {baseRes, queryIdReq} from "../struct/Record";
+import {WordNodeProxy} from "../components/proxy";
 
 interface PlanInf {
     getLatestPlanByUser(Request: queryIdReq, Response: getPlanDetailByIdRes): Promise<getPlanDetailByIdRes>
@@ -29,7 +30,7 @@ interface PlanInf {
 
     savePlanWords(Request: PlanWords, Response: baseRes): Promise<baseRes>
 }
-@TarsusReflect("WordNodeServer","plan")
+@WordNodeProxy("plan")
 class PlanImpl implements PlanInf {
     getLatestPlanByUser(Request: queryIdReq, Response: getPlanDetailByIdRes): Promise<getPlanDetailByIdRes> {
         throw new Error("Method not implemented.");

@@ -16,6 +16,7 @@ import {queryIdReq} from "../struct/Record";
 import {type} from "os";
 import {$BuildIn} from "../utils/queryBuilder";
 import lodash from 'lodash'
+import {WordNodeProxy} from "../components/proxy";
 
 interface WordServerInf {
     getWordList(Request: getWordListReq, Response: getWordListRes): Promise<getWordListRes>
@@ -34,7 +35,7 @@ interface WordServerInf {
 
 }
 
-@TarsusReflect("WordNodeServer","word")
+@WordNodeProxy("plan")
 class WordImpl implements WordServerInf {
     getWordList(Request: getWordListReq, Response: getWordListRes): Promise<getWordListRes> {
         throw new Error("Method not implemented.");

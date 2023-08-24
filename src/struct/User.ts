@@ -43,6 +43,26 @@ export class queryIdsReq {
     }
 };
 
+export class userBaseInfo {
+    public id: number;
+    public user_name: string;
+
+    constructor(...args: any[]) {
+        const _TarsusReadStream = new TarsusReadStream("userBaseInfo", args);
+        this.id = _TarsusReadStream.read_int(1);
+        this.user_name = _TarsusReadStream.read_string(2);
+    }
+};
+
+export class queryUsersNameRes {
+    public users: Array<userBaseInfo>;
+
+    constructor(...args: any[]) {
+        const _TarsusReadStream = new TarsusReadStream("queryUsersNameRes", args);
+        this.users = _TarsusReadStream.read_list(1, "List<userBaseInfo>");
+    }
+};
+
 export class batchSetUserReq {
     public ids: Array<number>;
     public info: User;

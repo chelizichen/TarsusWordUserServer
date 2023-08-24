@@ -5,13 +5,16 @@ import {
     getUserListReq,
     getUserListRes,
     queryIdReq,
-    queryIdsReq, User
+    queryIdsReq, queryUsersNameRes, User, userBaseInfo
 } from "../struct/User";
 import {Stream, TarsusInterFace, TarsusMethod} from "tarsus/core/microservice";
 import {$PoolConn} from "tarsus/core/database";
 import {$BuildIn, $ExcuteQuery, $QueryOne, $Resolve} from "../utils/queryBuilder";
 
+
 interface UserInf {
+    getBaseUserInfoList(Request: queryIdsReq, Response: queryUsersNameRes): Promise<queryUsersNameRes>
+
     getUserList(Request: getUserListReq, Response: getUserListRes): Promise<getUserListRes>
 
     getUserById(Request: queryIdReq, Response: getUserByIdRes): Promise<getUserByIdRes>
@@ -23,10 +26,20 @@ interface UserInf {
     batchDelUser(Request: queryIdsReq, Response: baseRes): Promise<baseRes>
 
     batchSetUser(Request: batchSetUserReq, Response: baseRes): Promise<baseRes>
+
 }
 
 @TarsusInterFace("user")
 class UserImpl implements UserInf {
+    @TarsusMethod
+    @Stream('queryIdsReq', 'queryUsersNameRes')
+    async getBaseUserInfoList(Request: queryIdsReq, Response: queryUsersNameRes): Promise<queryUsersNameRes> {
+        let buildIds = $BuildIn(Request.ids)
+        let sql = `select id as user_id,username as user_name from users where id in  ${buildIds}`
+        const data = await $ExcuteQuery<userBaseInfo>(sql)
+        Response.users = data.data;
+        return Response;
+    }
 
     @TarsusMethod
     @Stream("queryIdReq", "getUserByIdRes")
@@ -36,14 +49,14 @@ class UserImpl implements UserInf {
         select * from users where id = ?
         `
         let params = [id]
-        const data = await $ExcuteQuery<User>(sql,params)
-        if(data.code){
+        const data = await $ExcuteQuery<User>(sql, params)
+        if (data.code) {
             Response.code = data.code;
             Response.message = data.message;
-           return  Promise.resolve(Response)
+            return Promise.resolve(Response)
         }
         Response.data = data.data[0]
-        $Resolve(Response,data)
+        $Resolve(Response, data)
         return Promise.resolve(Response);
     }
 
@@ -62,9 +75,9 @@ class UserImpl implements UserInf {
         delete  from user where id in ?
         `
         let params = [ids_in];
-        let data = await $ExcuteQuery(sql,params);
-        $Resolve(Response,data);
-        Response.message = data.code?"删除失败":"删除成功"
+        let data = await $ExcuteQuery(sql, params);
+        $Resolve(Response, data);
+        Response.message = data.code ? "删除失败" : "删除成功"
         return Promise.resolve(Response);
     }
 
@@ -74,20 +87,20 @@ class UserImpl implements UserInf {
         Response.code = 0
         Response.message = 'ok';
         let ids = Request.ids
-        if(!ids.length){
+        if (!ids.length) {
             return Promise.resolve(Response)
         }
         let info = Request.info
-        let {username,password,role_name,level} = info
+        let {username, password, role_name, level} = info
         let buildIds = $BuildIn(ids)
         let sql = `
             update user set username = ?,password = ?,role_name = ?, level = ?  where id in ${buildIds}
         `
-        let params = [username,password,role_name,level]
-        return new Promise(async(resolve)=>{
+        let params = [username, password, role_name, level]
+        return new Promise(async (resolve) => {
             const conn = await $PoolConn()
-            conn.query(sql,params,function (err, results){
-                if(err){
+            conn.query(sql, params, function (err, results) {
+                if (err) {
                     Response.code = 600
                     Response.message = "ok"
                     resolve(Response)

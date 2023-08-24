@@ -1,5 +1,6 @@
 import {baseRes, getCurrRecordLenRes, getUserRecordRes, queryIdReq, setRecordReq} from "../struct/Record";
 import {TarsusReflect} from "tarsus/core/microservice";
+import {WordNodeProxy} from "../components/proxy";
 
 interface Record {
     getUserRecord(Request: queryIdReq, Response: getUserRecordRes): Promise<getUserRecordRes>
@@ -14,7 +15,7 @@ interface Record {
 
 }
 
-@TarsusReflect("WordNodeServer","record")
+@WordNodeProxy("plan")
 class RecordImpl implements Record {
     getUserRecord(Request: queryIdReq, Response: getUserRecordRes): Promise<getUserRecordRes> {
         throw new Error("Method not implemented.");

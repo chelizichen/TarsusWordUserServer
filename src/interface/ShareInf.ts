@@ -1,6 +1,7 @@
 import {getListBaseReq, getShareListRes, ShareDetail, ShareInfo, shareToUserReq, starShareReq} from "../struct/Share";
 import {baseRes, queryIdReq} from "../struct/User";
 import {TarsusReflect} from "tarsus/core/microservice";
+import {WordNodeProxy} from "../components/proxy";
 
 interface ShareInf {
     getShareList(Request: getListBaseReq, Response: getShareListRes): Promise<getShareListRes>
@@ -17,7 +18,7 @@ interface ShareInf {
 
 }
 
-@TarsusReflect("WordNodeServer","share")
+@WordNodeProxy("plan")
 class ShareImpl implements ShareInf {
     getShareList(Request: getListBaseReq, Response: getShareListRes): Promise<getShareListRes> {
         throw new Error("Method not implemented.");
