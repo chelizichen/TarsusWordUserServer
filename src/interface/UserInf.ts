@@ -9,8 +9,8 @@ import {
 } from "../struct/User";
 import {Stream, TarsusInterFace, TarsusMethod} from "tarsus/core/microservice";
 import {$PoolConn} from "tarsus/core/database";
-import {$BuildIn, $ExcuteQuery, $QueryOne, $Resolve} from "../utils/queryBuilder";
-
+import {$BuildIn, $ExecuteQuery, $QueryOne, $Resolve} from "../utils/queryBuilder";
+import Schedule from '../components/schedule'
 
 interface UserInf {
     getBaseUserInfoList(Request: queryIdsReq, Response: queryUsersNameRes): Promise<queryUsersNameRes>
@@ -34,29 +34,19 @@ class UserImpl implements UserInf {
     @TarsusMethod
     @Stream('queryIdsReq', 'queryUsersNameRes')
     async getBaseUserInfoList(Request: queryIdsReq, Response: queryUsersNameRes): Promise<queryUsersNameRes> {
-        let buildIds = $BuildIn(Request.ids)
-        let sql = `select id as user_id,username as user_name from users where id in  ${buildIds}`
-        const data = await $ExcuteQuery<userBaseInfo>(sql)
-        Response.users = data.data;
+        Response.users = Request.ids.map(id => {
+            return {
+                id,
+                user_name: Schedule.userMap[id].username || ''
+            }
+        })
         return Response;
     }
 
     @TarsusMethod
     @Stream("queryIdReq", "getUserByIdRes")
     async getUserById(Request: queryIdReq, Response: getUserByIdRes): Promise<getUserByIdRes> {
-        const id = Request.id
-        let sql = `
-        select * from users where id = ?
-        `
-        let params = [id]
-        const data = await $ExcuteQuery<User>(sql, params)
-        if (data.code) {
-            Response.code = data.code;
-            Response.message = data.message;
-            return Promise.resolve(Response)
-        }
-        Response.data = data.data[0]
-        $Resolve(Response, data)
+        Response.data = Schedule.userMap[Request.id];
         return Promise.resolve(Response);
     }
 
@@ -75,7 +65,7 @@ class UserImpl implements UserInf {
         delete  from user where id in ?
         `
         let params = [ids_in];
-        let data = await $ExcuteQuery(sql, params);
+        let data = await $ExecuteQuery(sql, params);
         $Resolve(Response, data);
         Response.message = data.code ? "删除失败" : "删除成功"
         return Promise.resolve(Response);

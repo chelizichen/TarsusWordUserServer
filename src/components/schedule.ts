@@ -10,7 +10,7 @@ type UserMap = Record<user_id, User>
 
 
 @Schedule
-class CacheServer {
+class ScheduleServer {
     public userMap: UserMap = {}
     public userSql = 'select * from users'
 
@@ -34,4 +34,4 @@ class CacheServer {
     }
 }
 
-export default new CacheServer();
+export default new ScheduleServer();

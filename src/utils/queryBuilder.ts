@@ -106,7 +106,7 @@ function $QueryDel(table: string, params: string | filedObj): Promise<queryRet<u
     });
 }
 
-function $ExcuteQuery<K,T = Array<K> | undefined>(sql:string,params:Array<filed> = []):Promise<queryRet<T>>{
+function $ExecuteQuery<K,T = Array<K> | undefined>(sql:string, params:Array<filed> = []):Promise<queryRet<T>>{
     const ret: queryRet<T> = { code: 0, message: "ok", data: undefined }; // 注意这里的类型声明
     return new Promise<queryRet<T>>(async (resolve) => {
         const conn = await $PoolConn();
@@ -137,6 +137,6 @@ export  {
     $BuildSel,
     $QueryOne,
     $QueryDel,
-    $ExcuteQuery,
+    $ExecuteQuery,
     $Resolve
 }
