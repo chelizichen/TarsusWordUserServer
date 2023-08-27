@@ -4,12 +4,13 @@ import RecordImpl from "./interface/Record";
 import UserImpl from "./interface/UserInf";
 import PlanImpl from "./interface/PlanInf";
 import "./components/schedule";
+import CacheImpl from "./interface/CacheInf";
 
 
 @TarsusMsApplication
 class MicroService {
     static main() {
-        LoadInterface([ UserImpl]);
+        LoadInterface([ UserImpl,CacheImpl]);
         LoadTaro()
         LoadStruct()
         LoadServer();
