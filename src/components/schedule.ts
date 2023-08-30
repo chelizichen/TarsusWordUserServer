@@ -17,7 +17,7 @@ class ScheduleServer {
     public userMap: UserMap = {}
     public wordMap :WordMap = {}
     public userSql = 'select * from users'
-    public wordSql = 'select en_word as en_name,own_mark,user_id from words '
+    public wordSql = 'select en_name as en_word,own_mark,user_id from words '
     // 每一天刷新一次
     @Cron("*/20 * * * *", true)
     public async UserCacheMethod() {
@@ -41,6 +41,8 @@ class ScheduleServer {
         const conn = await $PoolConn();
         const that = this;
         conn.query(that.wordSql, function (_, resu) {
+            console.log('resu',resu);
+            
             if (!resu.length) {
                 return
             }

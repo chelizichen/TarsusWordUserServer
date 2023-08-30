@@ -47,6 +47,8 @@ class UserImpl implements UserInf {
     @Stream("queryIdReq", "getUserByIdRes")
     async getUserById(Request: queryIdReq, Response: getUserByIdRes): Promise<getUserByIdRes> {
         Response.data = Schedule.userMap[Request.id];
+        Response.message = "从NodeJS传过来的参数";
+        console.log("转发数据",Response);
         return Promise.resolve(Response);
     }
 
