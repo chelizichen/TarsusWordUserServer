@@ -15,7 +15,7 @@
     "fast-json-stringify": "^5.8.0",
     "lodash": "^4.17.21",
     "redis": "^4.6.7",
-    "tarsus": "1.4.95",
+    "tarsus": "1.4.96",
     "tarsus-cli": "^1.2.98",
     "typescript": "5.0.2",
     "uid": "^2.0.2"
