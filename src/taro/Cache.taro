@@ -47,6 +47,18 @@ struct CacheParams  {
         3   list        :   List<cacheWord>;
         4   total       :   int;
     };
+    getUsersByIdsReq    :   {
+        1   ids         :   List<int>;  // word_ids
+    };
+    
+    getUsersByIdsRes    :   {
+        1   list         :   List<UserCache>;  // word_ids
+    };
+
+    UserCache           :   {
+        1   user_name   :   string;
+        2   user_id     :   string;
+    };
 };
 
 
@@ -56,4 +68,5 @@ interface CacheInf  {
     int setCache (Request : SetCacheReq, Response : SetCacheRes);
     int GetCache (Request : GetCacheReq, Response : GetCacheRes);
     int getCacheWords (Request : getWordsByIdsReq, Response : getWordsByIdsRes);
+    int getCacheUsers (Request : getUsersByIdsReq, Response : getUsersByIdsRes);
 };

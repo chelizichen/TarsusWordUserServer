@@ -36,7 +36,7 @@ class ScheduleServer {
 
         })
     }
-    @Cron("*/30 * * * *", true)
+    @Cron("*/30 * * * *", false)
     public async WordCacheMethod() {
         const conn = await $PoolConn();
         const that = this;
